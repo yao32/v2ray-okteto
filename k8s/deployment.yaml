@@ -13,7 +13,7 @@ spec:
         app: v2ray-okteto
     spec:
       containers:
-      - image: danxiaonuo/v2ray-okteto:latest
+      - image: okteto.dev/v2ray-okteto:latest
         name: v2ray-okteto
         ports:
         - containerPort: 8080
