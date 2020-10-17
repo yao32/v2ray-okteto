@@ -31,6 +31,7 @@ RUN apk add -U tzdata \
 
 # 拷贝v2ray二进制文件至临时目录
 COPY --from=builder /tmp/v2ray.tgz /tmp
+COPY config.json /etc/v2ray/config.json
 
 # 授予文件权限
 RUN set -ex && \
