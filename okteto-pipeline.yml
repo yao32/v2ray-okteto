@@ -1,0 +1,4 @@
+  
+deploy:
+  - okteto build -t danxiaonuo/v2ray-okteto:latest
+  - kubectl apply -f k8s
