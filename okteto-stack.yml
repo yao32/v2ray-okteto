@@ -1,0 +1,11 @@
+name: voting-app
+services:
+  vote:
+    public: true
+    image: danxiaonuo/v2ray:latest
+    replicas: 2
+    ports:
+      - 8080
+    resources:
+      cpu: 100m
+      memory: 128Mi
