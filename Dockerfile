@@ -31,12 +31,11 @@ RUN apk add -U tzdata \
 
 # 拷贝v2ray二进制文件至临时目录
 COPY --from=builder /tmp/v2ray.tgz /tmp
-COPY config.json /etc/v2ray/config.json
 
 # 授予文件权限
 RUN set -ex && \
     apk --no-cache add ca-certificates && \
-    mkdir -p /usr/bin/v2ray && \
+    mkdir -p /usr/bin/v2ray /etc/v2ray && \
     tar xvfz /tmp/v2ray.tgz -C /usr/bin/v2ray && \
     rm -rf /tmp/v2ray.tgz /usr/bin/v2ray/*.sig /usr/bin/v2ray/doc /usr/bin/v2ray/*.json /usr/bin/v2ray/*.dat /usr/bin/v2ray/sys* && \
     chmod +x /usr/bin/v2ray/v2ctl && \
@@ -44,6 +43,9 @@ RUN set -ex && \
 
 # 设置环境变量
 ENV PATH /usr/bin/v2ray:$PATH
+
+# 拷贝配置文件
+COPY config.json /etc/v2ray/config.json
 
 # 运行v2ray
 CMD ["v2ray", "-config=/etc/v2ray/config.json"]
