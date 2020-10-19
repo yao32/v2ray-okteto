@@ -64,10 +64,10 @@ jobs:
       with:
         tag: okteto.dev/v2ray-okteto:latest
         
-    - name: "创建deployment"
-      uses: okteto/apply@master
+    - name: "触发流程"
+      uses: okteto/pipeline@master
       with:
-        manifest: k8s
+        name: okteto-pipeline
         
     - name: "上传至okteto"
       uses: okteto/push@master
