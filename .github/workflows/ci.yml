@@ -27,18 +27,13 @@ on:
 
 # 定时触发开始编译(utc时间)
   schedule:
-    - cron: '0 3 * * 3'
+    - cron: '0 3 * * *'
 
 
 # 点☆Star触发开始编译
   watch:  
      types: [started]
      
-# 环境变量
-env:
-   # 自定义执行脚本名称
-   DIY_P1_SH: scripts/provider.sh
-   DIY_P2_SH: scripts/ruleset.sh
 
 # 任务集
 jobs:
