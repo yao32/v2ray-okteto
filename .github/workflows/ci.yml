@@ -58,11 +58,11 @@ jobs:
       uses: okteto/namespace@master
       with:
         name: danxiaonuo
-    
-    - name: "构建镜像"
-      uses: okteto/build@master
+
+    - name: "销毁流程"
+      uses: okteto/destroy-pipeline@master
       with:
-        tag: okteto.dev/v2ray-okteto:latest
+        name: okteto-pipeline
         
     - name: "触发流程"
       uses: okteto/pipeline@master
