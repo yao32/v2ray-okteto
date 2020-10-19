@@ -1,0 +1,81 @@
+#=================================================
+# https://github.com/danxiaonuo/v2ray-okteto
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: danxiaonuo
+# Blog: https://www.danxiaonuo.com
+#=================================================
+
+# 编译的名称
+name: 自动编译代理
+
+on:
+  repository_dispatch:
+
+# 编辑文件触发开始编译
+#  push:
+#    branches:
+#      - master
+#    paths:
+#      - '.github/workflows/ci.yml'
+
+
+# release发布触发开始编译
+#  release:
+#    types: published
+
+
+# 定时触发开始编译(utc时间)
+  schedule:
+    - cron: '0 3 * * 3'
+
+
+# 点☆Star触发开始编译
+  watch:  
+     types: [started]
+     
+# 环境变量
+env:
+   # 自定义执行脚本名称
+   DIY_P1_SH: scripts/provider.sh
+   DIY_P2_SH: scripts/ruleset.sh
+
+# 任务集
+jobs:
+  build:
+    # 选择虚拟环境
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    # 运行步骤
+    steps:
+    
+    # 准备完毕
+    - name: 准备完毕
+      uses: actions/checkout@v2
+    
+    - name: 登录okteto
+      uses: okteto/login@master
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "激活命名空间"
+      uses: okteto/namespace@master
+      with:
+        name: danxiaonuo
+    
+    - name: "构建镜像"
+      uses: okteto/build@master
+      with:
+        tag: okteto.dev/v2ray-okteto:latest
+        
+    - name: "创建deployment"
+      uses: okteto/apply@master
+      with:
+        manifest: k8s
+        
+    - name: "上传至okteto"
+      uses: okteto/push@master
+      with:
+        namespace: danxiaonuo
+        name: v2ray-okteto
