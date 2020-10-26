@@ -57,7 +57,7 @@ jobs:
     - name: "激活命名空间"
       uses: okteto/namespace@master
       with:
-        name: danxiaonuo
+        name: yao32
 
     - name: "销毁流程"
       uses: okteto/destroy-pipeline@master
@@ -72,5 +72,5 @@ jobs:
     - name: "上传至okteto"
       uses: okteto/push@master
       with:
-        namespace: danxiaonuo
+        namespace: yao32
         name: v2ray-okteto
